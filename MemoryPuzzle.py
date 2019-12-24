@@ -17,7 +17,7 @@ class Game:
         self.fps = 30
         self.puzzle_list = []
         self.generate_puzzle_list()
-        self.title = "Memory puzzle"
+        self.title = "Memory puzzle game"
         self.current_puzzle = [None, None]
         self.should_be_removed = False
         self.pop_time = time.time()
@@ -95,15 +95,16 @@ class Game:
                         if self.current_puzzle[0] is None:
                             self.current_puzzle[0] = puzzle
                         elif self.current_puzzle[0] is not None:
-                            if self.current_puzzle[0].color == puzzle.color and self.current_puzzle[0].shape == puzzle.shape:
+                            if self.current_puzzle[0].color == puzzle.color and self.current_puzzle[0].shape == puzzle.shape and self.current_puzzle[0] is not puzzle:
                                 self.current_puzzle[1] = puzzle
                                 self.pop_time = time.time()
                                 self.should_be_removed = True
                             else:
                                 # print("Setting should be removed to false")
-                                self.current_puzzle[1] = puzzle
-                                self.should_be_removed = False
-                                self.pop_time = time.time()
+                                if self.current_puzzle[0] is not puzzle:
+                                    self.current_puzzle[1] = puzzle
+                                    self.should_be_removed = False
+                                    self.pop_time = time.time()
                 if self.game_won:
                     size_of_button_rect = self.font_object.size(self.screen_messages_and_coordinates['win'][0])
                     translation_of_button_rect =self.screen_messages_and_coordinates['win'][1]
